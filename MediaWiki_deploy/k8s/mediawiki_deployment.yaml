@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mediawiki-deployment
+  name: mediawiki_deployment
 spec:
   replicas: 1
   selector:
