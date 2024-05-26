@@ -1,0 +1,27 @@
+To move the Docker images created on Linux VM to an Azure Container Registry (ACR) on Azure cloud, follow these steps:
+
+Tag Docker Images: Tag your local Docker images with the ACR login server address.
+
+Log in to ACR: Log in to your Azure Container Registry from the Docker CLI.
+
+Push Docker Images: Push the tagged Docker images to your Azure Container Registry.
+
+Here's a step-by-step:
+
+Step 1: Log in to Azure and ACR
+
+sudo az login
+
+sudo az acr login --name appregistry2090
+
+Step 2: Tag Docker Images
+
+sudo docker tag mediawiki_img appregistry2090.azurecr.io/mediawiki_img
+
+sudo docker tag mysql_img <acr_login_server>/my_mysql
+
+Step 3: Push Docker Images
+
+sudo docker push appregistry2090.azurecr.io/mediawiki_img
+
+sudo docker push appregistry2090.azurecr.io/mysql_img
