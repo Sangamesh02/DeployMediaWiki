@@ -1,0 +1,36 @@
+trigger:
+- main # Or specify the branch you want to trigger the build on
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Docker@2
+  displayName: Build MediaWiki Docker image
+  inputs:
+    containerRegistry: 'ACRConnection' # Replace with your Azure Container Registry connection alias
+    repository: '<acr_login_server>/mediawiki'
+    command: 'build'
+    Dockerfile: '/Dockerfile_mediawiki'
+
+- task: Docker@2
+  displayName: Build MySQL Docker image
+  inputs:
+    containerRegistry: 'ACRConnection' # Replace with your Azure Container Registry connection alias
+    repository: '<acr_login_server>/mysql'
+    command: 'build'
+    Dockerfile: '/Dockerfile_mysql'
+
+- task: Docker@2
+  displayName: Push MediaWiki Docker image to ACR
+  inputs:
+    containerRegistry: 'ACRConnection' # Replace with your Azure Container Registry connection alias
+    repository: '<acr_login_server>/mediawiki'
+    command: 'push'
+
+- task: Docker@2
+  displayName: Push MySQL Docker image to ACR
+  inputs:
+    containerRegistry: 'ACRConnection' # Replace with your Azure Container Registry connection alias
+    repository: '<acr_login_server>/mysql'
+    command: 'push'
