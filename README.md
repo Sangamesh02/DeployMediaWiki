@@ -59,5 +59,5 @@ kubectl get svc mediawiki-service
 
 Access MediaWiki using the external IP address in web browser.
 
-We also do build images on our LinuxVM.
+We also do build images on our LinuxVM and then push it to ACR.
 
