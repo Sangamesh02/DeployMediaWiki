@@ -1,0 +1,36 @@
+# Use the official MySQL image from Docker Hub
+FROM mysql
+
+# Set environment variables
+ENV MYSQL_ROOT_PASSWORD=password \
+    MYSQL_DATABASE=my_wiki \
+    MYSQL_USER=wiki_user \
+    MYSQL_PASSWORD=wiki_password
+
+# Expose port 3306 for MySQL access
+EXPOSE 3306
+
+
+#To build a Docker image using this Dockerfile:
+
+#Make sure you have Docker installed on your Linux VM.
+#Navigate to the directory where you saved the Dockerfile.
+
+
+#Run the following command to build the Docker image:
+
+#docker build -t mysql_img .
+
+
+#To create a container using the built Docker image:
+
+#docker run -d --name mysql_container -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=my_wiki -e MYSQL_USER=wiki_user -e MYSQL_PASSWORD=wiki_password mysql_img
+
+#Now, you need to link this MySQL container with the previously created MediaWiki container. 
+
+#Assuming your MediaWiki container is named mediawiki_container, 
+
+#you can link it to the MySQL container using the --link option when starting the MediaWiki container:
+
+#docker run -d --name mediawiki_container -p 8080:80 --link mysql_container:mysql my_mediawiki
+
