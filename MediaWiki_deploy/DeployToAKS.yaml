@@ -1,0 +1,53 @@
+trigger: none # Change this trigger as per your requirements
+
+pr: none
+
+stages:
+
+- stage: CreateAKSInfrastructure
+  displayName: 'Create AKS Infrastructure'
+  jobs:
+  - job: CreateAKS
+    displayName: 'Create AKS Cluster'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: AzureResourceGroupDeployment@2
+      inputs:
+        azureSubscription: 'AzureServiceConnection'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: 'YourResourceGroupName'
+        location: 'YourLocation'
+        templateLocation: 'Linked artifact'
+        csmFile: '/aks-arm-template.json'  # Path to your ARM template file
+        overrideParameters: '-clusterName "$(AKSClusterName)" -nodeCount $(NodeCount) -nodeVMSize $(NodeVMSize)' # Customize parameters as needed
+
+
+- stage: DeployToAKS
+  displayName: 'Deploy to AKS'
+  jobs:
+  - deployment: DeployToAKS
+    displayName: 'Deploy to AKS'
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: 'AKSEnvironment'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: Kubernetes@1
+            displayName: 'Kubectl apply MediaWiki deployment'
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: 'AKSServiceConnection'
+              namespace: 'default'
+              command: 'apply'
+              arguments: '-f k8s/mediawiki-deployment.yaml' # Path to your MediaWiki deployment manifest
+          - task: Kubernetes@1
+            displayName: 'Kubectl apply MySQL deployment'
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: 'AKSServiceConnection'
+              namespace: 'default'
+              command: 'apply'
+              arguments: '-f k8s/mysql-deployment.yaml' # Path to your MySQL deployment manifest
