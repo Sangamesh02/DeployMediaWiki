@@ -13,7 +13,7 @@ kubectl installed locally or access to Azure Cloud Shell
 Docker installed locally or access to Azure Cloud Shell
 
 
-##Steps
+# Steps
 
 1. Build Docker Images
 docker build -t <acr_login_server>/mediawiki .
