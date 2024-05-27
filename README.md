@@ -16,7 +16,7 @@ Docker installed locally or access to Azure Cloud Shell
 
 Steps
 
-1. Build Docker Images (We build docker images either on VM, or in Azure DevOps Build pipeline in build_push.yaml file and then move to ACR.)
+1. Build Docker Images (We build docker images either on VM, or in Azure DevOps Build pipeline in build_push.yaml file and then push to ACR.)
 
 docker build -t mediawiki .
 
@@ -62,5 +62,5 @@ kubectl get svc mediawiki-service
 
 Access MediaWiki using the external IP address in web browser.
 
-We also do build images on our LinuxVM and then push it to ACR.
+(We also do build images on our LinuxVM and then push it to ACR.)
 
