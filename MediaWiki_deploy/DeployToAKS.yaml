@@ -42,7 +42,7 @@ stages:
               kubernetesServiceEndpoint: 'AKSServiceConnection'
               namespace: 'default'
               command: 'apply'
-              arguments: '-f k8s/mediawiki-deployment.yaml' # Path to MediaWiki deployment manifest
+              arguments: '-f k8s/mediawiki_deployment.yaml' # Path to MediaWiki deployment manifest
           - task: Kubernetes@1
             displayName: 'Kubectl apply MySQL deployment'
             inputs:
@@ -50,4 +50,4 @@ stages:
               kubernetesServiceEndpoint: 'AKSServiceConnection'
               namespace: 'default'
               command: 'apply'
-              arguments: '-f k8s/mysql-deployment.yaml' # Path to MySQL deployment manifest
+              arguments: '-f k8s/mysql_deployment.yaml' # Path to MySQL deployment manifest
